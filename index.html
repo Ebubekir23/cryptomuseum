@@ -11,10 +11,10 @@
 <title>CryptoMuseum</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Light theme */
@@ -61,17 +61,23 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   min-height: 100vh;
   transition: background 0.25s, color 0.25s;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* ── LAYOUT ── */
@@ -173,7 +179,7 @@ nav {
   font-size: 15px;
   color: var(--text-secondary);
   max-width: 480px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 /* ── ALGO SELECTOR ── */
@@ -226,9 +232,9 @@ nav {
 .algo-card:hover { border-color: var(--border-focus); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
 .algo-card.active { border-color: var(--accent); border-width: 2px; background: var(--bg-card); }
 
-.algo-card-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-.algo-card-year { font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: 8px; }
-.algo-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.algo-card-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; line-height: 1.4; }
+.algo-card-year { font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); margin-bottom: 8px; line-height: 1.5; }
+.algo-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
 
 .algo-tag {
   display: inline-block; margin-top: 8px;
@@ -297,10 +303,11 @@ textarea, input[type="text"], input[type="number"] {
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.7;
   transition: border-color 0.15s;
   outline: none;
   -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
 }
 textarea:focus, input:focus { border-color: var(--border-focus); }
 textarea { min-height: 100px; resize: vertical; }
@@ -312,12 +319,13 @@ textarea { min-height: 100px; resize: vertical; }
   padding: 10px 12px;
   font-family: var(--font-mono);
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text-primary);
   min-height: 100px;
   word-break: break-all;
   white-space: pre-wrap;
-  position: relative;
+  overflow: visible;
+  -webkit-font-smoothing: antialiased;
 }
 
 .output-placeholder { color: var(--text-tertiary); font-style: italic; }
@@ -397,16 +405,17 @@ textarea { min-height: 100px; resize: vertical; }
 }
 @media (max-width: 620px) { .history-block { grid-template-columns: 1fr; } }
 
-.history-item { display: flex; flex-direction: column; gap: 4px; }
-.history-key { font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase; }
-.history-val { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+.history-item { display: flex; flex-direction: column; gap: 6px; }
+.history-key { font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5; }
+.history-val { font-size: 14px; color: var(--text-primary); line-height: 1.75; }
 .history-fail {
-  margin-top: 12px; padding: 10px 14px;
+  margin-top: 12px; padding: 14px 16px;
   background: var(--bg-input); border-left: 3px solid var(--danger);
   border-radius: 0 6px 6px 0;
-  font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.75;
 }
-.history-fail strong { color: var(--danger); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 4px; font-family: var(--font-mono); }
+.history-fail strong { color: var(--danger); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 6px; font-family: var(--font-mono); line-height: 1.6; }
 
 /* ── FOOTER ── */
 footer {
