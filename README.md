@@ -56,7 +56,7 @@ Click the **▶ Run Cipher** button. The result appears instantly in the Output 
 |--------|-------------|
 | **▶ Run Cipher** | Encrypts or decrypts your input using the selected algorithm |
 | **⎘ Copy** | Copies the output text to your clipboard |
-| **⤷ Share Link** | Generates a URL containing your encrypted message — send it to a friend |
+| **⤷ Share Link** | Generates a URL containing your encrypted message |
 | **⇅ Swap** | Moves the output to the input field and switches the mode (useful for quick decryption) |
 | **✕ Clear** | Clears both input and output fields |
 | **🌐 TR / EN** | Switches the entire site between Turkish and English |
@@ -66,7 +66,7 @@ Click the **▶ Run Cipher** button. The result appears instantly in the Output 
 
 ### Share Feature
 
-When you click **Share Link**, the site generates a special URL that encodes your encrypted message. You can copy this link and send it to anyone — when they open it, the site automatically loads your ciphertext so they can decrypt it.
+When you click **Share Link**, the site generates a special URL that encodes your encrypted message. You can copy this link and send it to anyone. When they open it, the site automatically loads your ciphertext so they can decrypt it.
 
 > All encryption runs entirely in your browser. No data is sent to any server.
 
@@ -148,7 +148,7 @@ Bazı algoritmalar ek bilgi gerektirir:
 |-------|-----------|
 | **▶ Şifrele** | Girişinizi seçilen algoritmaya göre şifreler veya çözer |
 | **⎘ Kopyala** | Çıkış metnini panonuza kopyalar |
-| **⤷ Link Paylaş** | Şifreli mesajınızı içeren bir URL oluşturur — arkadaşınıza gönderin |
+| **⤷ Link Paylaş** | Şifreli mesajınızı içeren bir URL oluşturur |
 | **⇅ Yer Değiştir** | Çıkışı giriş alanına taşır ve modu değiştirir (hızlı çözme için kullanışlı) |
 | **✕ Temizle** | Hem giriş hem çıkış alanlarını temizler |
 | **🌐 TR / EN** | Sitenin tamamını Türkçe ve İngilizce arasında değiştirir |
@@ -158,7 +158,7 @@ Bazı algoritmalar ek bilgi gerektirir:
 
 ### Paylaşma Özelliği
 
-**Link Paylaş** düğmesine tıkladığınızda, site şifreli mesajınızı kodlayan özel bir URL oluşturur. Bu linki kopyalayıp herkese gönderebilirsiniz — açtıklarında site şifreli metninizi otomatik olarak yükler ve onlar da çözebilir.
+**Link Paylaş** düğmesine tıkladığınızda, site şifreli mesajınızı kodlayan özel bir URL oluşturur. Bu linki kopyalayıp herkese gönderebilirsiniz. Açtıklarında site şifreli metninizi otomatik olarak yükler ve onlar da çözebilir.
 
 > Tüm şifreleme tamamen tarayıcınızda çalışır. Hiçbir veri hiçbir sunucuya gönderilmez.
 
