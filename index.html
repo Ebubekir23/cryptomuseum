@@ -700,8 +700,6 @@ const ALGOS = {
       how: "Mesajı bir anahtar kelime altında satırlar halinde yazın. Örnek — anahtar 'ZEBRA', mesaj 'SALDIR SABAH': 5 sütunlu ızgarayı satır satır doldurun. Ardından sütunları anahtar kelime harflerine göre alfabetik olarak yeniden sıralayın (A=1., B=2., E=3., R=4., Z=5.) ve her sütunu yukarıdan aşağıya okuyun. Sütun yeniden sıralaması, harflerin hiçbirini değiştirmeden mesaj sırasını karıştırır.",
       fail: "Bilinen düz metin saldırıları yıkıcıdır: orijinal mesajın küçük bir parçasını bile bilirseniz, hangi sütunların bir arada olduğunu yeniden oluşturabilirsiniz. Bireysel sütunlar üzerindeki frekans analizi, anahtar kelime uzunluğunu ortaya çıkarır. Çift sütunlu (iki kez uygulamak) önemli ölçüde daha güçlüdür, ancak yine de kripto analizine yenik düştü. Gerçek ders: yerine koyma olmadan yalnızca transpozisyon, tüm orijinal harf frekanslarını değiştirmeden bırakır."
     },
-      fail: "Bilinen düz metin saldırıları sütun sırasını yeniden oluşturabilir. Sütunlardaki frekans analizi, anahtar kelime uzunluğunu ortaya çıkarır."
-    },
     encrypt(t,p){
       const k=(p.key||'KEY').toUpperCase().replace(/[^A-Z]/g,'')||'KEY';
       const order=[...k].map((c,i)=>[c,i]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1]-b[1]).map(x=>x[1]);
