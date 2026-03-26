@@ -124,8 +124,12 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  padding: 72px 0 56px;
+  padding: 48px 0 40px;
   border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 32px 0 28px; }
 }
 
 .hero-eyebrow {
@@ -134,16 +138,16 @@ nav {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-tertiary);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hero h1 {
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 1.05;
+  line-height: 1.08;
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   max-width: 600px;
 }
 
@@ -153,30 +157,27 @@ nav {
 }
 
 .hero-desc {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-secondary);
   max-width: 480px;
   line-height: 1.7;
-  margin-bottom: 32px;
 }
-
-.hero-stats {
-  display: flex; gap: 32px; flex-wrap: wrap;
-}
-
-.stat { display: flex; flex-direction: column; gap: 2px; }
-.stat-num { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; }
-.stat-label { font-size: 12px; color: var(--text-tertiary); font-family: var(--font-mono); }
 
 /* ── ALGO SELECTOR ── */
-.section { padding: 48px 0; border-bottom: 1px solid var(--border); }
-.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
+.section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
 .section-title { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); font-family: var(--font-mono); }
 
 .algo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .algo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .container { padding: 0 16px; }
+  .section { padding: 24px 0; }
 }
 
 .algo-card {
@@ -245,8 +246,8 @@ nav {
 }
 .mode-btn.active { background: var(--bg-card); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
 
-.lab-body { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 620px) { .lab-body { grid-template-columns: 1fr; } }
+.lab-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 620px) { .lab-body { grid-template-columns: 1fr; padding: 16px; } }
 
 .field-label {
   font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
@@ -255,7 +256,7 @@ nav {
 }
 
 textarea, input[type="text"], input[type="number"] {
-  width: 100%; padding: 12px 14px;
+  width: 100%; padding: 10px 12px;
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -268,18 +269,18 @@ textarea, input[type="text"], input[type="number"] {
   -webkit-appearance: none;
 }
 textarea:focus, input:focus { border-color: var(--border-focus); }
-textarea { min-height: 120px; resize: vertical; }
+textarea { min-height: 100px; resize: vertical; }
 
 .output-field {
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.6;
   color: var(--text-primary);
-  min-height: 120px;
+  min-height: 100px;
   word-break: break-all;
   white-space: pre-wrap;
   position: relative;
@@ -287,13 +288,22 @@ textarea { min-height: 120px; resize: vertical; }
 
 .output-placeholder { color: var(--text-tertiary); font-style: italic; }
 
-.params-row { display: flex; gap: 12px; flex-wrap: wrap; padding: 0 24px 20px; }
-.param-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
+.params-row { display: flex; gap: 10px; flex-wrap: wrap; padding: 0 20px 16px; }
+.param-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 130px; }
 
-.run-row { padding: 0 24px 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+.run-row { padding: 0 20px 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+@media (max-width: 480px) {
+  .run-row { gap: 6px; }
+  .lab-header { padding: 16px; }
+  .params-row { padding: 0 16px 14px; }
+  .run-row { padding: 0 16px 16px; }
+  .share-box { margin: 0 16px 16px; }
+  .history-section { padding: 16px; }
+}
 
 .btn-primary {
-  height: 42px; padding: 0 24px;
+  height: 40px; padding: 0 20px;
   background: var(--accent); color: var(--accent-text);
   border: none; border-radius: 8px;
   font-family: var(--font-display);
@@ -301,12 +311,13 @@ textarea { min-height: 120px; resize: vertical; }
   cursor: pointer;
   transition: opacity 0.15s, transform 0.1s;
   display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
 }
 .btn-primary:hover { opacity: 0.88; }
 .btn-primary:active { transform: scale(0.98); }
 
 .btn-secondary {
-  height: 42px; padding: 0 18px;
+  height: 40px; padding: 0 14px;
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -316,6 +327,7 @@ textarea { min-height: 120px; resize: vertical; }
   cursor: pointer;
   transition: all 0.15s;
   display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
 }
 .btn-secondary:hover { background: var(--bg-chip); color: var(--text-primary); border-color: var(--border-focus); }
 .btn-secondary.success { color: var(--success); border-color: var(--success); }
@@ -423,11 +435,7 @@ footer {
     <p class="hero-desc" data-en="Encrypt and decrypt messages using historical algorithms. Learn why each cipher was revolutionary — and why it eventually failed." data-tr="Tarihi algoritmalar kullanarak mesajlarınızı şifreleyin ve çözün. Her şifrenin neden devrimci olduğunu ve sonunda neden başarısız olduğunu öğrenin.">
       Encrypt and decrypt messages using historical algorithms. Learn why each cipher was revolutionary — and why it eventually failed.
     </p>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">7</span><span class="stat-label" data-en="algorithms" data-tr="algoritma">algorithms</span></div>
-      <div class="stat"><span class="stat-num">3000+</span><span class="stat-label" data-en="years of history" data-tr="yıllık tarih">years of history</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label" data-en="client-side" data-tr="istemci taraflı">client-side</span></div>
-    </div>
+
   </div>
 </section>
 
@@ -484,6 +492,10 @@ footer {
           <span>⇅</span>
           <span data-en="Swap" data-tr="Yer Değiştir">Swap</span>
         </button>
+        <button class="btn-secondary" onclick="clearAll()">
+          <span>✕</span>
+          <span data-en="Clear" data-tr="Temizle">Clear</span>
+        </button>
       </div>
 
       <div class="share-box" id="shareBox">
@@ -504,7 +516,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;width:100%;">
-    <span class="footer-text">CryptoMuseum — <span data-en="Built by" data-tr="Yapımcı">Built by</span> <a href="https://github.com/" class="footer-link" id="githubLink">Ebubekir Yılmaz</a></span>
+    <span class="footer-text">CryptoMuseum — <span data-en="Built by" data-tr="Yapımcı">Built by</span> <a href="https://github.com/ebubekir23" class="footer-link" id="githubLink">Ebubekir Yılmaz</a></span>
     <span class="footer-text" data-en="All encryption runs locally. No data is sent anywhere." data-tr="Tüm şifreleme yerel olarak çalışır. Hiçbir veri hiçbir yere gönderilmez.">All encryption runs locally. No data is sent anywhere.</span>
   </div>
 </footer>
@@ -837,6 +849,7 @@ function renderHistory() {
 function selectAlgo(id) {
   currentAlgo = id;
   lastOutput = '';
+  document.getElementById('inputText').value = '';
   document.getElementById('labAlgoName').textContent = '— ' + (currentLang==='en'?ALGOS[id].nameEn:ALGOS[id].nameTr);
   document.getElementById('outputField').innerHTML = `<span class="output-placeholder">${currentLang==='en'?'Result will appear here...':'Sonuç burada görünecek...'}</span>`;
   document.getElementById('shareBox').classList.remove('visible');
@@ -877,13 +890,16 @@ function runCipher() {
   if (!rawInput.trim()) { showToast(currentLang==='en'?'Please enter some text.':'Lütfen metin girin.'); return; }
   if (rawInput.length > 10000) { showToast(currentLang==='en'?'Text too long (max 10000 chars).':'Metin çok uzun (maks. 10000 karakter).'); return; }
   const params = getParams();
+  const out = document.getElementById('outputField');
+  out.textContent = '';
+  document.getElementById('shareBox').classList.remove('visible');
   try {
     const algo = ALGOS[currentAlgo];
     lastOutput = currentMode === 'encrypt' ? algo.encrypt(rawInput, params) : algo.decrypt(rawInput, params);
-    document.getElementById('outputField').textContent = lastOutput;
-    document.getElementById('shareBox').classList.remove('visible');
+    out.textContent = lastOutput;
   } catch(e) {
-    document.getElementById('outputField').textContent = 'Error: ' + e.message;
+    lastOutput = '';
+    out.textContent = 'Error: ' + e.message;
   }
 }
 
@@ -902,14 +918,24 @@ function copyOutput() {
 function swapIO() {
   if (!lastOutput) return;
   document.getElementById('inputText').value = lastOutput;
-  document.getElementById('outputField').innerHTML = `<span class="output-placeholder">${currentLang==='en'?'Result will appear here...':'Sonuç burada görünecek...'}</span>`;
   lastOutput = '';
-  setMode(currentMode === 'encrypt' ? 'decrypt' : 'encrypt');
+  const out = document.getElementById('outputField');
+  out.innerHTML = `<span class="output-placeholder">${currentLang==='en'?'Result will appear here...':'Sonuç burada görünecek...'}</span>`;
+  document.getElementById('shareBox').classList.remove('visible');
+  currentMode = currentMode === 'encrypt' ? 'decrypt' : 'encrypt';
   document.getElementById('modeEncrypt').classList.toggle('active', currentMode==='encrypt');
   document.getElementById('modeDecrypt').classList.toggle('active', currentMode==='decrypt');
 }
 
-// ── GENERATE SHARE LINK
+// ── CLEAR ALL
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  lastOutput = '';
+  document.getElementById('outputField').innerHTML = `<span class="output-placeholder">${currentLang==='en'?'Result will appear here...':'Sonuç burada görünecek...'}</span>`;
+  document.getElementById('shareBox').classList.remove('visible');
+}
+
+
 function genLink() {
   if (!lastOutput) { showToast(currentLang==='en'?'Run the cipher first.':'Önce şifreyi çalıştırın.'); return; }
   const params = getParams();
