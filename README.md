@@ -10,7 +10,6 @@
 
 CryptoMuseum is an interactive web application that lets you encrypt and decrypt messages using 7 classical cipher algorithms — each paired with its historical story, how it works, and why it was eventually broken.
 
-Built as a first-year Software Engineering project to explore cryptography, history, and clean UI design.
 
 ---
 
@@ -103,7 +102,6 @@ cd cryptomuseum
 
 CryptoMuseum, 7 klasik şifreleme algoritması kullanarak mesajlarınızı şifrelemenizi ve çözmenizi sağlayan interaktif bir web uygulamasıdır. Her algoritma; kendi tarihsel hikâyesi, nasıl çalıştığı ve sonunda neden kırıldığıyla birlikte sunulmaktadır.
 
-Kriptografi, tarih ve temiz arayüz tasarımını bir arada keşfetmek amacıyla Yazılım Mühendisliği 1. sınıf projesi olarak geliştirilmiştir.
 
 ---
 
