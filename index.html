@@ -590,13 +590,13 @@ const ALGOS = {
       origin: "Ancient Rome, ~58 BC",
       usedBy: "Julius Caesar used it to send secret orders to his generals during military campaigns in Gaul (modern France). Suetonius documented it in 'The Twelve Caesars' around 121 AD.",
       how: "Every letter in the message is shifted a fixed number of steps forward in the alphabet. With shift=3: A→D, B→E, C→F … X→A, Y→B, Z→C. To decrypt, you simply shift the same number of steps backward. For example, 'HELLO' with shift 3 becomes 'KHOOR'.",
-      fail: "The fatal weakness: there are only 25 possible keys (shifts 1–25). An attacker doesn't need to guess — they just try all 25 combinations and pick whichever one produces readable text. This is called a brute-force attack. Arab polymath Al-Kindi dealt the final blow in the 9th century with frequency analysis: in English, 'E' appears ~13% of the time. The most common letter in the ciphertext must therefore be the encrypted 'E', instantly revealing the shift."
+      fail: "The fatal weakness: there are only 25 possible keys (shifts 1–25). An attacker doesn't need to guess. They just try all 25 combinations and pick whichever one produces readable text. This is called a brute-force attack. Arab polymath Al-Kindi dealt the final blow in the 9th century with frequency analysis: in English, 'E' appears ~13% of the time. The most common letter in the ciphertext must therefore be the encrypted 'E', instantly revealing the shift."
     },
     historyTr: {
       origin: "Antik Roma, yaklaşık MÖ 58",
       usedBy: "Julius Caesar, Gaul (modern Fransa) askeri seferlerinde generallerine gizli emirler göndermek için bu şifreyi kullandı. Suetonius, MS 121 yılında yazdığı 'On İki Sezar' adlı eserinde bu şifreyi belgeledi.",
       how: "Mesajdaki her harf, alfabede sabit sayıda adım ileri kaydırılır. Shift=3 ile: A→D, B→E, C→F … X→A, Y→B, Z→C. Çözmek için aynı sayıda adım geri kaydırılır. Örneğin 'MERHABA' shift 3 ile 'PHUKDED' olur.",
-      fail: "Ölümcül zayıflık: yalnızca 25 olası anahtar (1–25 arası shift) vardır. Saldırganın tahmin etmesine gerek yok — 25 kombinasyonun hepsini dener ve anlamlı metni verenini seçer. Buna kaba kuvvet saldırısı denir. Arap polimatı Al-Kindi, 9. yüzyılda frekans analizi ile son darbeyi vurdu: İngilizcede 'E' harfi yaklaşık %13 oranında görünür. Şifreli metindeki en sık geçen harf mutlaka şifrelenmiş 'E' harfidir — bu da kaydırma miktarını anında ortaya çıkarır."
+      fail: "Ölümcül zayıflık: yalnızca 25 olası anahtar (1–25 arası shift) vardır. Saldırganın tahmin etmesine gerek yoktur. 25 kombinasyonun hepsini dener ve anlamlı metni verenini seçer. Buna kaba kuvvet saldırısı denir. Arap polimatı Al-Kindi, 9. yüzyılda frekans analizi ile son darbeyi vurdu: İngilizcede 'E' harfi yaklaşık %13 oranında görünür. Şifreli metindeki en sık geçen harf mutlaka şifrelenmiş 'E' harfidir. Bu da kaydırma miktarını anında ortaya çıkarır."
     },
     encrypt(t,p){ const s=((parseInt(p.shift)%26)+26)%26; return t.split('').map(c=>{ if(c>='A'&&c<='Z') return String.fromCharCode((c.charCodeAt(0)-65+s)%26+65); if(c>='a'&&c<='z') return String.fromCharCode((c.charCodeAt(0)-97+s)%26+97); return c; }).join(''); },
     decrypt(t,p){ return ALGOS.caesar.encrypt(t,{shift:26-((parseInt(p.shift)%26)+26)%26}); }
@@ -610,15 +610,15 @@ const ALGOS = {
     params: [{id:"key",en:"Keyword",tr:"Anahtar Kelime",type:"text",def:"KEY"}],
     historyEn: {
       origin: "Renaissance Europe, 1553",
-      usedBy: "Invented by Giovan Battista Bellaso but misattributed to diplomat Blaise de Vigenère for centuries. Used by diplomats and military commanders across Europe. Mary Queen of Scots famously relied on it — unsuccessfully.",
+      usedBy: "Invented by Giovan Battista Bellaso but misattributed to diplomat Blaise de Vigenère for centuries. Used by diplomats and military commanders across Europe. Mary Queen of Scots famously relied on it, unsuccessfully.",
       how: "Instead of one fixed shift, a keyword determines a different shift for each letter. Keyword 'KEY' means: K=10, E=4, Y=24. The message 'HELLO' becomes H+10=R, E+4=I, L+24=J, L+10=V, O+4=S → 'RIJVS'. When the keyword runs out, it repeats from the start. This destroys the frequency pattern that breaks Caesar.",
-      fail: "Called 'le chiffre indéchiffrable' (the unbreakable cipher) for nearly 300 years. Charles Babbage cracked it in 1854 — but kept it secret. His method: if the same word appears multiple times in a message, the gaps between those repetitions are likely multiples of the keyword length. Once you know the keyword length, you split the ciphertext into groups and apply Caesar analysis to each. Kasiski independently published the same method in 1863."
+      fail: "Called 'le chiffre indéchiffrable' (the unbreakable cipher) for nearly 300 years. Charles Babbage cracked it in 1854 but kept it secret. His method: if the same word appears multiple times in a message, the gaps between those repetitions are likely multiples of the keyword length. Once you know the keyword length, you split the ciphertext into groups and apply Caesar analysis to each. Kasiski independently published the same method in 1863."
     },
     historyTr: {
       origin: "Rönesans Avrupası, 1553",
-      usedBy: "Giovan Battista Bellaso tarafından icat edildi ancak yüzyıllarca diplomat Blaise de Vigenère'e atfedildi. Avrupalı diplomatlar ve komutanlar tarafından kullanıldı. İskoçya Kraliçesi Mary bu şifreye güvendi — başarısızlıkla.",
+      usedBy: "Giovan Battista Bellaso tarafından icat edildi ancak yüzyıllarca diplomat Blaise de Vigenère'e atfedildi. Avrupalı diplomatlar ve komutanlar tarafından kullanıldı. İskoçya Kraliçesi Mary bu şifreye güvendi, başarısızlıkla.",
       how: "Sabit bir kaydırma yerine, bir anahtar kelime her harf için farklı bir kaydırma belirler. 'KEY' anahtarı: K=10, E=4, Y=24 demektir. 'MERHABA' mesajı her harfe farklı shift uygulanarak şifrelenir. Anahtar kelime bitince başa döner. Bu yöntem, Caesar'ı kıran frekans desenini tamamen yok eder.",
-      fail: "Neredeyse 300 yıl boyunca 'le chiffre indéchiffrable' (kırılamaz şifre) olarak anıldı. Charles Babbage 1854'te kırdı — ama bunu gizli tuttu. Yöntemi: bir mesajda aynı kelime birden fazla kez görünüyorsa, bu tekrarlar arasındaki mesafeler büyük ihtimalle anahtar kelime uzunluğunun katlarıdır. Uzunluğu bilince şifreli metin gruplara bölünür ve her gruba Caesar analizi uygulanır. Kasiski aynı yöntemi 1863'te bağımsız olarak yayımladı."
+      fail: "Neredeyse 300 yıl boyunca 'le chiffre indéchiffrable' (kırılamaz şifre) olarak anıldı. Charles Babbage 1854'te kırdı ama bunu gizli tuttu. Yöntemi: bir mesajda aynı kelime birden fazla kez görünüyorsa, bu tekrarlar arasındaki mesafeler büyük ihtimalle anahtar kelime uzunluğunun katlarıdır. Uzunluğu bilince şifreli metin gruplara bölünür ve her gruba Caesar analizi uygulanır. Kasiski aynı yöntemi 1863'te bağımsız olarak yayımladı."
     },
     encrypt(t,p){
       const k=(p.key||'A').toUpperCase().replace(/[^A-Z]/g,'')||'A'; let ki=0;
@@ -637,16 +637,16 @@ const ALGOS = {
     status: "broken",
     params: [{id:"rails",en:"Rails (2–8)",tr:"Ray Sayısı (2–8)",type:"number",min:2,max:8,def:2}],
     historyEn: {
-      origin: "American Civil War, 1860s — though the concept is older",
+      origin: "American Civil War, 1860s (though the concept is older)",
       usedBy: "Both Union and Confederate armies used transposition ciphers for field communications. WWI soldiers also used Rail Fence for quick, low-security messages.",
       how: "Imagine writing your message on a fence, zigzagging up and down across N rails. With 'HELLO WORLD' on 2 rails: H-L-O-O-L on the top rail, E-L-W-R-D on the bottom. Read each rail left to right and concatenate: HLOOLEL WRD. Decryption requires figuring out how many characters belong to each rail, then reassembling the zigzag.",
-      fail: "The key space is tiny — just the number of rails (2 to N). An attacker tries each rail count in milliseconds. There's also no substitution: every letter stays itself, just reordered. This means a good cryptanalyst can often spot patterns and reconstruct the message without even trying all keys."
+      fail: "The key space is tiny: just the number of rails (2 to N). An attacker tries each rail count in milliseconds. There's also no substitution: every letter stays itself, just reordered. This means a good cryptanalyst can often spot patterns and reconstruct the message without even trying all keys."
     },
     historyTr: {
-      origin: "Amerikan İç Savaşı, 1860'lar — ancak konsept daha eskidir",
+      origin: "Amerikan İç Savaşı, 1860'lar (ancak konsept daha eskidir)",
       usedBy: "Hem Kuzey hem Güney orduları saha haberleşmesi için transpozisyon şifreleri kullandı. I. Dünya Savaşı'nda askerler de hızlı, düşük güvenlikli mesajlar için Ray Çiti'ni kullandı.",
       how: "Mesajı bir çit üzerine N ray boyunca zikzak çizerek yazdığınızı hayal edin. 'MERHABA' için 2 ray: M-R-A-A üst rayda, E-H-B-alt rayda. Her rayı soldan sağa okuyup birleştirin. Çözme işlemi her raya kaç karakter düştüğünü hesaplamayı, ardından zikzağı yeniden oluşturmayı gerektirir.",
-      fail: "Anahtar uzayı son derece küçüktür — yalnızca ray sayısı kadar anahtar vardır. Saldırgan her ray sayısını milisaniyeler içinde dener. Ayrıca hiç yerine koyma (substitution) yoktur: her harf kendisi kalır, sadece sırası değişir. Bu da deneyimli bir kriptanalistin anahtarları denemeden bile desenleri fark edip mesajı yeniden oluşturabileceği anlamına gelir."
+      fail: "Anahtar uzayı son derece küçüktür: yalnızca ray sayısı kadar anahtar vardır. Saldırgan her ray sayısını milisaniyeler içinde dener. Ayrıca hiç yerine koyma (substitution) yoktur: her harf kendisi kalır, sadece sırası değişir. Bu da deneyimli bir kriptanalistin anahtarları denemeden bile desenleri fark edip mesajı yeniden oluşturabileceği anlamına gelir."
     },
     encrypt(t,p){
       const r=Math.max(2,parseInt(p.rails)||2);
@@ -672,16 +672,16 @@ const ALGOS = {
     status: "broken",
     params: [],
     historyEn: {
-      origin: "Ancient Hebrew, ~600 BC — one of humanity's oldest known ciphers",
+      origin: "Ancient Hebrew, ~600 BC. One of humanity's oldest known ciphers.",
       usedBy: "Hebrew scribes encoded sensitive names in religious texts. The name 'Atbash' comes from the first two and last two letters of the Hebrew alphabet: Aleph-Tav, Beth-Shin. It appears in the Book of Jeremiah where 'Babel' is written as 'Sheshach'.",
-      how: "The entire alphabet is simply flipped. A↔Z, B↔Y, C↔X … M↔N. Because the mapping is its own inverse, encryption and decryption are identical operations — you apply Atbash to the ciphertext and get back the plaintext. No key needed at all.",
-      fail: "Zero key space. There is exactly one possible Atbash transformation — no choices, no variations. The 'security' relies entirely on the recipient not knowing the method exists. Once you know it's Atbash, decryption is instantaneous. Modern cryptography requires that security comes from the key, not from secrecy of the method (Kerckhoffs's principle, 1883)."
+      how: "The entire alphabet is simply flipped. A↔Z, B↔Y, C↔X … M↔N. Because the mapping is its own inverse, encryption and decryption are identical operations. You apply Atbash to the ciphertext and get back the plaintext. No key needed at all.",
+      fail: "Zero key space. There is exactly one possible Atbash transformation: no choices, no variations. The 'security' relies entirely on the recipient not knowing the method exists. Once you know it's Atbash, decryption is instantaneous. Modern cryptography requires that security comes from the key, not from secrecy of the method (Kerckhoffs's principle, 1883)."
     },
     historyTr: {
-      origin: "Antik İbrani, yaklaşık MÖ 600 — insanlığın bilinen en eski şifrelerinden biri",
+      origin: "Antik İbrani, yaklaşık MÖ 600. İnsanlığın bilinen en eski şifrelerinden biri.",
       usedBy: "İbrani yazıcılar, dini metinlerde hassas isimleri kodladı. 'Atbash' adı, İbrani alfabesinin ilk iki ve son iki harfinden gelir: Alef-Tav, Bet-Şin. Yeremya Kitabı'nda 'Babil' adı 'Şeşah' olarak yazılmıştır.",
-      how: "Tüm alfabe basitçe ters çevrilir. A↔Z, B↔Y, C↔X … M↔N. Eşleme kendi tersine eşit olduğundan, şifreleme ve çözme aynı işlemdir — Atbash'ı şifreli metne uygularsınız ve düz metni geri alırsınız. Hiçbir anahtar gerekmez.",
-      fail: "Sıfır anahtar uzayı. Yalnızca bir olası Atbash dönüşümü vardır — seçenek yok, varyasyon yok. 'Güvenlik' tamamen alıcının yöntemi bilmemesine dayanır. Atbash olduğunu öğrenir öğrenmez çözme anlıktır. Modern kriptografi, güvenliğin yöntemin gizliliğinden değil anahtardan gelmesini gerektirir (Kerckhoffs ilkesi, 1883)."
+      how: "Tüm alfabe basitçe ters çevrilir. A↔Z, B↔Y, C↔X … M↔N. Eşleme kendi tersine eşit olduğundan, şifreleme ve çözme aynı işlemdir. Atbash'ı şifreli metne uygularsınız ve düz metni geri alırsınız. Hiçbir anahtar gerekmez.",
+      fail: "Sıfır anahtar uzayı. Yalnızca bir olası Atbash dönüşümü vardır: seçenek yok, varyasyon yok. 'Güvenlik' tamamen alıcının yöntemi bilmemesine dayanır. Atbash olduğunu öğrenir öğrenmez çözme anlıktır. Modern kriptografi, güvenliğin yöntemin gizliliğinden değil anahtardan gelmesini gerektirir (Kerckhoffs ilkesi, 1883)."
     },
     encrypt(t){ return t.split('').map(c=>{ if(c>='A'&&c<='Z') return String.fromCharCode(90-(c.charCodeAt(0)-65)); if(c>='a'&&c<='z') return String.fromCharCode(122-(c.charCodeAt(0)-97)); return c; }).join(''); },
     decrypt(t){ return ALGOS.atbash.encrypt(t); }
@@ -694,16 +694,16 @@ const ALGOS = {
     status: "broken",
     params: [],
     historyEn: {
-      origin: "Usenet newsgroups, early 1980s — born from internet culture, not warfare",
+      origin: "Usenet newsgroups, early 1980s. Born from internet culture, not warfare.",
       usedBy: "Early internet communities used ROT13 to hide punchlines, spoilers, puzzle answers, and controversial content. Reddit and many forums still support it today with a single click.",
-      how: "ROT13 is Caesar with shift=13. The magic of 13: since the Latin alphabet has exactly 26 letters, shifting by 13 twice lands you back where you started. ROT13(ROT13(x)) = x. This means the same function both encrypts and decrypts — there's no separate 'decode' mode. A→N, B→O … N→A, O→B.",
-      fail: "Shift=13 is globally known and fixed — there is no key. ROT13 was never designed for security. Its purpose was social: hiding content from casual eyes while making it trivially reversible for anyone who wanted to see it. It's the digital equivalent of writing something upside down."
+      how: "ROT13 is Caesar with shift=13. The magic of 13: since the Latin alphabet has exactly 26 letters, shifting by 13 twice lands you back where you started. ROT13(ROT13(x)) = x. This means the same function both encrypts and decrypts. There's no separate 'decode' mode. A→N, B→O … N→A, O→B.",
+      fail: "Shift=13 is globally known and fixed. There is no key. ROT13 was never designed for security. Its purpose was social: hiding content from casual eyes while making it trivially reversible for anyone who wanted to see it. It's the digital equivalent of writing something upside down."
     },
     historyTr: {
-      origin: "Usenet haber grupları, 1980'lerin başı — savaştan değil internet kültüründen doğdu",
+      origin: "Usenet haber grupları, 1980'lerin başı. Savaştan değil internet kültüründen doğdu.",
       usedBy: "Erken internet toplulukları, espriler, spoiler'lar, bulmaca cevapları ve tartışmalı içerikleri gizlemek için ROT13 kullandı. Reddit ve pek çok forum bugün hâlâ tek tıkla ROT13 desteği sunmaktadır.",
       how: "ROT13, shift=13 ile Caesar şifresidir. 13'ün sihri: Latin alfabesi tam olarak 26 harften oluştuğundan, 13 adım ilerlemek sizi yarıya götürür; ikinci 13 adım sizi başa döndürür. ROT13(ROT13(x)) = x. Bu, aynı fonksiyonun hem şifreleme hem de çözme işlevi gördüğü anlamına gelir. A→N, B→O … N→A, O→B.",
-      fail: "Shift=13 evrensel olarak bilinir ve sabittir — anahtar yoktur. ROT13 hiçbir zaman güvenlik için tasarlanmadı. Amacı sosyaldi: içeriği meraklı gözlerden gizlerken, görmek isteyen herkes için anında geri alınabilir kılmak. Dijital dünyadaki baş aşağı yazı eşdeğeridir."
+      fail: "Shift=13 evrensel olarak bilinir ve sabittir. Anahtar yoktur. ROT13 hiçbir zaman güvenlik için tasarlanmadı. Amacı sosyaldi: içeriği meraklı gözlerden gizlerken, görmek isteyen herkes için anında geri alınabilir kılmak. Dijital dünyadaki baş aşağı yazı eşdeğeridir."
     },
     encrypt(t){ return ALGOS.caesar.encrypt(t,{shift:13}); },
     decrypt(t){ return ALGOS.caesar.encrypt(t,{shift:13}); }
@@ -716,16 +716,16 @@ const ALGOS = {
     status: "safe",
     params: [],
     historyEn: {
-      origin: "United States, 1837 — invented alongside the electric telegraph",
+      origin: "United States, 1837. Invented alongside the electric telegraph.",
       usedBy: "Samuel Morse and Alfred Vail built the first telegraph line between Washington D.C. and Baltimore in 1844. Within decades, Morse code connected entire continents. It was the internet of the 19th century.",
       how: "Every letter, digit, and punctuation mark is represented by a unique pattern of dots (short signals) and dashes (long signals). 'S' = ··· (three dots), 'O' = ─── (three dashes), giving the famous SOS distress signal: ··· ─── ···. Letters are separated by short pauses, words by longer ones.",
-      fail: "Morse is an encoding standard, not a cipher. It was designed for speed and reliability, not secrecy. There is no key — the encoding table is public and universal. Anyone with a Morse chart can decode any message instantly. It's comparable to Base64 in modern computing: useful for transmission, not for hiding information. Morse code is still actively used in amateur radio and aviation navigation beacons today."
+      fail: "Morse is an encoding standard, not a cipher. It was designed for speed and reliability, not secrecy. There is no key. The encoding table is public and universal. Anyone with a Morse chart can decode any message instantly. It's comparable to Base64 in modern computing: useful for transmission, not for hiding information. Morse code is still actively used in amateur radio and aviation navigation beacons today."
     },
     historyTr: {
-      origin: "Amerika Birleşik Devletleri, 1837 — elektrikli telgrafla birlikte icat edildi",
+      origin: "Amerika Birleşik Devletleri, 1837. Elektrikli telgrafla birlikte icat edildi.",
       usedBy: "Samuel Morse ve Alfred Vail, 1844'te Washington D.C. ile Baltimore arasındaki ilk telgraf hattını kurdu. Onlarca yıl içinde Mors kodu kıtaları birbirine bağladı. 19. yüzyılın interneti oldu.",
       how: "Her harf, rakam ve noktalama işareti, benzersiz bir nokta (kısa sinyal) ve çizgi (uzun sinyal) deseniyle temsil edilir. 'S' = ··· (üç nokta), 'O' = ─── (üç çizgi), böylece ünlü SOS kurtarma sinyali: ··· ─── ···. Harfler kısa duraklamalarla, kelimeler daha uzun duraklamalarla ayrılır.",
-      fail: "Mors, bir şifreleme değil; bir kodlama standardıdır. Hız ve güvenilirlik için tasarlandı, gizlilik için değil. Anahtar yoktur — kodlama tablosu herkese açık ve evrenseldir. Mors tablosuna sahip herkes herhangi bir mesajı anında çözebilir. Modern bilişimdeki Base64'e benzer: iletim için kullanışlı, bilgiyi gizlemek için değil. Mors kodu bugün hâlâ amatör radyo ve havacılık seyrüsefer işaretçilerinde aktif olarak kullanılmaktadır."
+      fail: "Mors, bir şifreleme değil; bir kodlama standardıdır. Hız ve güvenilirlik için tasarlandı, gizlilik için değil. Anahtar yoktur. Kodlama tablosu herkese açık ve evrenseldir. Mors tablosuna sahip herkes herhangi bir mesajı anında çözebilir. Modern bilişimdeki Base64'e benzer: iletim için kullanışlı, bilgiyi gizlemek için değil. Mors kodu bugün hâlâ amatör radyo ve havacılık seyrüsefer işaretçilerinde aktif olarak kullanılmaktadır."
     },
     encrypt(t){
       const m={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.',' ':'/'};
@@ -744,15 +744,15 @@ const ALGOS = {
     status: "broken",
     params: [{id:"key",en:"Keyword",tr:"Anahtar Kelime",type:"text",def:"ZEBRA"}],
     historyEn: {
-      origin: "World War I, ~1914–1918 — though transposition ciphers date back to ancient Sparta",
-      usedBy: "The German Imperial Army used a double columnar transposition as part of the ADFGVX cipher system. Allied cryptanalysts at the French Bureau du Chiffre, led by Georges Painvin, broke it in 1918 — a feat that may have altered the outcome of WWI.",
-      how: "Write your message in rows under a keyword. Example — keyword 'ZEBRA', message 'ATTACK AT DAWN': fill a 5-column grid row by row. Then reorder the columns alphabetically by keyword letters (A=1st, B=2nd, E=3rd, R=4th, Z=5th) and read each column top to bottom. The column reordering scrambles the message order without changing any letters.",
+      origin: "World War I, ~1914–1918. Transposition ciphers date back to ancient Sparta.",
+      usedBy: "The German Imperial Army used a double columnar transposition as part of the ADFGVX cipher system. Allied cryptanalysts at the French Bureau du Chiffre, led by Georges Painvin, broke it in 1918. This feat may have altered the outcome of WWI.",
+      how: "Write your message in rows under a keyword. Example with keyword 'ZEBRA', message 'ATTACK AT DAWN': fill a 5-column grid row by row. Then reorder the columns alphabetically by keyword letters (A=1st, B=2nd, E=3rd, R=4th, Z=5th) and read each column top to bottom. The column reordering scrambles the message order without changing any letters.",
       fail: "Known-plaintext attacks are devastating: if you know even a fragment of the original message, you can reconstruct which columns belong together. Frequency analysis on individual columns exposes the keyword length. Double columnar (applying it twice) is significantly stronger, but still fell to dedicated cryptanalysis. The real lesson: transposition alone, without substitution, leaves all original letter frequencies intact."
     },
     historyTr: {
-      origin: "I. Dünya Savaşı, yaklaşık 1914–1918 — ancak transpozisyon şifreleri antik Sparta'ya kadar uzanır",
-      usedBy: "Alman İmparatorluk Ordusu, ADFGVX şifre sistemi kapsamında çift sütunlu transpozisyon kullandı. Georges Painvin liderliğindeki Fransız Bureau du Chiffre'deki müttefik kriptanalistler 1918'de kırdı — bu başarı I. Dünya Savaşı'nın sonucunu değiştirmiş olabilir.",
-      how: "Mesajı bir anahtar kelime altında satırlar halinde yazın. Örnek — anahtar 'ZEBRA', mesaj 'SALDIR SABAH': 5 sütunlu ızgarayı satır satır doldurun. Ardından sütunları anahtar kelime harflerine göre alfabetik olarak yeniden sıralayın (A=1., B=2., E=3., R=4., Z=5.) ve her sütunu yukarıdan aşağıya okuyun. Sütun yeniden sıralaması, harflerin hiçbirini değiştirmeden mesaj sırasını karıştırır.",
+      origin: "I. Dünya Savaşı, yaklaşık 1914–1918. Transpozisyon şifreleri antik Sparta'ya kadar uzanır.",
+      usedBy: "Alman İmparatorluk Ordusu, ADFGVX şifre sistemi kapsamında çift sütunlu transpozisyon kullandı. Georges Painvin liderliğindeki Fransız Bureau du Chiffre'deki müttefik kriptanalistler 1918'de kırdı. Bu başarı I. Dünya Savaşı'nın sonucunu değiştirmiş olabilir.",
+      how: "Mesajı bir anahtar kelime altında satırlar halinde yazın. Örnek: anahtar 'ZEBRA', mesaj 'SALDIR SABAH'. 5 sütunlu ızgarayı satır satır doldurun. Ardından sütunları anahtar kelime harflerine göre alfabetik olarak yeniden sıralayın (A=1., B=2., E=3., R=4., Z=5.) ve her sütunu yukarıdan aşağıya okuyun. Sütun yeniden sıralaması, harflerin hiçbirini değiştirmeden mesaj sırasını karıştırır.",
       fail: "Bilinen düz metin saldırıları yıkıcıdır: orijinal mesajın küçük bir parçasını bile bilirseniz, hangi sütunların bir arada olduğunu yeniden oluşturabilirsiniz. Bireysel sütunlar üzerindeki frekans analizi, anahtar kelime uzunluğunu ortaya çıkarır. Çift sütunlu (iki kez uygulamak) önemli ölçüde daha güçlüdür, ancak yine de kripto analizine yenik düştü. Gerçek ders: yerine koyma olmadan yalnızca transpozisyon, tüm orijinal harf frekanslarını değiştirmeden bırakır."
     },
     encrypt(t,p){
