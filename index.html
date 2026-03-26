@@ -71,10 +71,11 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   transition: background 0.25s, color 0.25s;
+  overflow-x: hidden;
 }
 
 /* ── LAYOUT ── */
-.container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+.container { max-width: 920px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
 /* ── NAVBAR ── */
 nav {
@@ -87,13 +88,15 @@ nav {
 
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
-  height: 56px;
+  height: 52px;
+  min-width: 0;
 }
 
 .nav-logo {
-  font-size: 16px; font-weight: 800; letter-spacing: -0.02em;
+  font-size: 15px; font-weight: 800; letter-spacing: -0.02em;
   color: var(--text-primary); text-decoration: none;
   display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
 }
 
 .nav-logo .logo-icon {
@@ -103,12 +106,15 @@ nav {
   display: flex; align-items: center; justify-content: center;
   color: var(--accent-text);
   font-size: 14px;
+  flex-shrink: 0;
 }
 
-.nav-controls { display: flex; align-items: center; gap: 6px; }
+.nav-logo-text { display: inline; }
+
+.nav-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
 .nav-btn {
-  height: 32px; padding: 0 12px;
+  height: 30px; padding: 0 11px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: transparent;
@@ -118,9 +124,16 @@ nav {
   cursor: pointer;
   transition: all 0.15s;
   display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
 }
 .nav-btn:hover { background: var(--bg-chip); color: var(--text-primary); border-color: var(--border-focus); }
 .nav-btn.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+@media (max-width: 420px) {
+  .nav-logo-text { display: none; }
+  .nav-btn-label { display: none; }
+  .nav-btn { padding: 0 8px; gap: 0; }
+}
 
 /* ── HERO ── */
 .hero {
@@ -142,7 +155,7 @@ nav {
 }
 
 .hero h1 {
-  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-size: clamp(1.6rem, 4.5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.08;
@@ -174,10 +187,31 @@ nav {
   gap: 8px;
 }
 
-@media (max-width: 480px) {
-  .algo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .container { padding: 0 16px; }
-  .section { padding: 24px 0; }
+@media (max-width: 600px) {
+  html { font-size: 14px; }
+  .container { padding: 0 14px; }
+  .section { padding: 20px 0; }
+  .algo-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+  .algo-card { padding: 12px; }
+  .algo-card-name { font-size: 13px; }
+  .algo-card-desc { font-size: 11px; }
+  .hero { padding: 24px 0 20px; }
+  .hero h1 { font-size: 1.55rem; }
+  .hero-desc { font-size: 13px; }
+  .lab-header { padding: 14px; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .lab-body { padding: 14px; gap: 12px; }
+  .params-row { padding: 0 14px 12px; }
+  .run-row { padding: 0 14px 14px; gap: 6px; flex-wrap: wrap; }
+  .btn-primary { height: 38px; padding: 0 16px; font-size: 13px; }
+  .btn-secondary { height: 38px; padding: 0 11px; font-size: 12px; }
+  .share-box { margin: 0 14px 14px; }
+  .history-section { padding: 14px; }
+  .history-block { grid-template-columns: 1fr; gap: 14px; }
+  .history-val { font-size: 13px; }
+  .history-fail { font-size: 12px; }
+  footer { padding: 20px 0; }
+  .footer-text { font-size: 11px; }
+  .toast { right: 14px; bottom: 14px; font-size: 12px; padding: 10px 14px; }
 }
 
 .algo-card {
@@ -411,16 +445,16 @@ footer {
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <div class="logo-icon">⬡</div>
-        CryptoMuseum
+        <span class="nav-logo-text">CryptoMuseum</span>
       </a>
       <div class="nav-controls">
         <button class="nav-btn" id="langBtn" onclick="toggleLang()" title="Switch language">
           <span id="langIcon">🌐</span>
-          <span id="langLabel">TR</span>
+          <span class="nav-btn-label" id="langLabel">TR</span>
         </button>
         <button class="nav-btn" id="themeBtn" onclick="toggleTheme()">
           <span id="themeIcon">☀</span>
-          <span id="themeLabel" data-en="Light" data-tr="Açık">Light</span>
+          <span class="nav-btn-label" id="themeLabel" data-en="Light" data-tr="Açık">Light</span>
         </button>
       </div>
     </div>
