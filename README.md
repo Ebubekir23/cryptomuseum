@@ -92,7 +92,7 @@ cd cryptomuseum
 
 ---
 
-*Made by [Ebubekir Yılmaz](https://github.com/ebubekir23) — Software Engineering, Year 1*
+*Made by [Ebubekir Yılmaz](https://github.com/ebubekir23)
 
 ---
 ---
@@ -185,4 +185,4 @@ cd cryptomuseum
 
 ---
 
-*[Ebubekir Yılmaz](https://github.com/ebubekir23) tarafından yapıldı — Yazılım Mühendisliği, 1. Sınıf*
+*[Ebubekir Yılmaz](https://github.com/ebubekir23) tarafından yapıldı.
