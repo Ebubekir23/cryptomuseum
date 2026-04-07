@@ -564,6 +564,71 @@ footer {
     </div>
   </div>
 </section>
+<!-- FREKANS ANALİZİ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-title" 
+            data-en="Frequency Analysis" 
+            data-tr="Frekans Analizi">Frekans Analizi</span>
+    </div>
+    <div class="lab-card">
+      <div class="lab-header">
+        <div>
+          <div class="lab-title" 
+               data-en="🔍 Auto Cipher Detector" 
+               data-tr="🔍 Otomatik Şifre Tespit">
+            🔍 Otomatik Şifre Tespit
+          </div>
+          <div class="lab-algo-name" 
+               data-en="— paste any ciphertext to detect & decrypt" 
+               data-tr="— şifreli metni yapıştır, algoritma otomatik tespit edilsin">
+            — şifreli metni yapıştır, algoritma otomatik tespit edilsin
+          </div>
+        </div>
+      </div>
+      <div class="lab-body">
+        <div>
+          <label class="field-label" 
+                 data-en="Ciphertext Input" 
+                 data-tr="Şifreli Metin Girişi">
+            Şifreli Metin Girişi
+          </label>
+          <textarea id="freqInput" 
+                    spellcheck="false" 
+                    placeholder="Şifreli metni buraya yapıştırın..."></textarea>
+        </div>
+        <div>
+          <label class="field-label" 
+                 data-en="Analysis Result" 
+                 data-tr="Analiz Sonucu">
+            Analiz Sonucu
+          </label>
+          <div class="output-field" id="freqOutput">
+            <span class="output-placeholder" 
+                  data-en="Analysis result will appear here..." 
+                  data-tr="Analiz sonucu burada görünecek...">
+              Analiz sonucu burada görünecek...
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="run-row">
+        <button class="btn-primary" onclick="runFrequencyAnalysis()">
+          <span>📊</span>
+          <span data-en="Analyse" data-tr="Analiz Et">Analiz Et</span>
+        </button>
+        <button class="btn-secondary" onclick="
+          document.getElementById('freqInput').value='';
+          document.getElementById('freqOutput').innerHTML='<span class=\'output-placeholder\'>Analiz sonucu burada görünecek...</span>';
+        ">
+          <span>✕</span>
+          <span data-en="Clear" data-tr="Temizle">Temizle</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
@@ -819,9 +884,14 @@ const ALGOS = {
       fail: "Mors, bir şifreleme değil; bir kodlama standardıdır. Hız ve güvenilirlik için tasarlandı, gizlilik için değil. Anahtar yoktur. Kodlama tablosu herkese açık ve evrenseldir. Mors tablosuna sahip herkes herhangi bir mesajı anında çözebilir. Modern bilişimdeki Base64'e benzer: iletim için kullanışlı, bilgiyi gizlemek için değil. Mors kodu bugün hâlâ amatör radyo ve havacılık seyrüsefer işaretçilerinde aktif olarak kullanılmaktadır."
     },
     encrypt(t){
-      const m={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.',' ':'/'};
-      return t.toUpperCase().split('').map(c=>m[c]??'').filter(Boolean).join(' ');
-    },
+  const m={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.',' ':'/'};
+  const normalized = t
+    .replace(/ğ/gi,'g').replace(/ş/gi,'s')
+    .replace(/ç/gi,'c').replace(/ö/gi,'o')
+    .replace(/ü/gi,'u').replace(/ı/gi,'i')
+    .replace(/İ/gi,'i');
+  return normalized.toUpperCase().split('').map(c=>m[c]??'').filter(Boolean).join(' ');
+},
     decrypt(t){
       const m={'.-':'A','-...':'B','-.-.':'C','-..':'D','.':'E','..-.':'F','--.':'G','....':'H','..':'I','.---':'J','-.-':'K','.-..':'L','--':'M','-.':'N','---':'O','.--.':'P','--.-':'Q','.-.':'R','...':'S','-':'T','..-':'U','...-':'V','.--':'W','-..-':'X','-.--':'Y','--..':'Z','-----':'0','.----':'1','..---':'2','...--':'3','....-':'4','.....':'5','-....':'6','--...':'7','---..':'8','----.':'9','/':' '};
       return t.split(' ').map(c=>m[c]??'').join('');
@@ -1152,6 +1222,349 @@ renderAlgoGrid();
 renderParams();
 renderHistory();
 loadFromHash();
+// == FREKANS ANALİZİ MODÜLÜ v7 - Türkçe Odaklı ==
+
+const FA_TR_FREQ = {
+  'a':11.92,'e':9.10,'i':8.60,'n':7.99,'r':7.72,
+  'l':5.92,'k':5.72,'t':5.12,'ı':5.05,'m':4.46,
+  'd':4.41,'y':3.92,'s':3.77,'u':3.10,'b':2.96,
+  'ü':2.88,'o':2.49,'z':2.01,'ş':1.77,'g':1.71,
+  'ç':1.57,'h':1.25,'ğ':1.01,'ö':0.95,'v':0.91,
+  'p':0.91,'f':0.73,'j':0.03,'x':0.01,'w':0.01
+};
+
+const FA_EN_FREQ = {
+  'e':12.70,'t':9.06,'a':8.17,'o':7.51,'i':6.97,
+  'n':6.75,'s':6.33,'h':6.09,'r':5.99,'d':4.25,
+  'l':4.03,'c':2.78,'u':2.76,'m':2.41,'w':2.36,
+  'f':2.23,'g':2.02,'y':1.97,'p':1.93,'b':1.49,
+  'v':0.98,'k':0.77,'j':0.15,'x':0.15,'q':0.10,'z':0.07
+};
+
+const FA_TR_ALPHA = 'abcçdefgğhıijklmnoöprsştuüvyz';
+const FA_EN_ALPHA = 'abcdefghijklmnopqrstuvwxyz';
+
+const FA_MORSE_MAP = {
+  '.-':'A','-...':'B','-.-.':'C','-..':'D','.':'E',
+  '..-.':'F','--.':'G','....':'H','..':'I','.---':'J',
+  '-.-':'K','.-..':'L','--':'M','-.':'N','---':'O',
+  '.--.':'P','--.-':'Q','.-.':'R','...':'S','-':'T',
+  '..-':'U','...-':'V','.--':'W','-..-':'X','-.--':'Y',
+  '--..':'Z','-----':'0','.----':'1','..---':'2',
+  '...--':'3','....-':'4','.....':'5','-.....':'6',
+  '--....':'7','---...':'8','----.':'9'
+};
+
+function fa_onlyLetters(text) {
+  return text.toLowerCase().replace(/[^a-züğşçöıi]/g, '');
+}
+
+function fa_getFreq(text) {
+  const clean = fa_onlyLetters(text);
+  const total = clean.length;
+  if (total === 0) return { freq: {}, total: 0 };
+  const counts = {};
+  for (const ch of clean) counts[ch] = (counts[ch] || 0) + 1;
+  const freq = {};
+  for (const ch in counts) freq[ch] = (counts[ch] / total) * 100;
+  return { freq, total };
+}
+
+function fa_chiSq(observed, expected) {
+  let score = 0;
+  for (const ch in expected) {
+    const obs = observed[ch] || 0;
+    const exp = expected[ch];
+    score += Math.pow(obs - exp, 2) / exp;
+  }
+  return score;
+}
+
+function fa_calcIC(text) {
+  const clean = fa_onlyLetters(text);
+  const n = clean.length;
+  if (n < 2) return 0;
+  const counts = {};
+  for (const ch of clean) counts[ch] = (counts[ch] || 0) + 1;
+  let sum = 0;
+  for (const ch in counts) sum += counts[ch] * (counts[ch] - 1);
+  return sum / (n * (n - 1));
+}
+
+function fa_bestCaesar(text, lang) {
+  const alpha = lang === 'tr' ? FA_TR_ALPHA : FA_EN_ALPHA;
+  const table = lang === 'tr' ? FA_TR_FREQ : FA_EN_FREQ;
+  const n = alpha.length;
+  let best = { shift: 0, score: Infinity, decrypted: '' };
+  for (let shift = 0; shift < n; shift++) {
+    let dec = '';
+    for (const ch of text.toLowerCase()) {
+      const idx = alpha.indexOf(ch);
+      dec += idx === -1 ? ch : alpha[(idx - shift + n) % n];
+    }
+    const { freq } = fa_getFreq(dec);
+    const score = fa_chiSq(freq, table);
+    if (score < best.score) best = { shift, score, decrypted: dec };
+  }
+  return best;
+}
+
+function fa_atbashDecrypt(text, lang) {
+  const alpha = lang === 'tr' ? FA_TR_ALPHA : FA_EN_ALPHA;
+  const n = alpha.length;
+  let dec = '';
+  for (const ch of text.toLowerCase()) {
+    const idx = alpha.indexOf(ch);
+    dec += idx === -1 ? ch : alpha[n - 1 - idx];
+  }
+  return dec;
+}
+function fa_normalizeTurkish(text) {
+  return text
+    .replace(/ğ/g,'g').replace(/Ğ/g,'G')
+    .replace(/ş/g,'s').replace(/Ş/g,'S')
+    .replace(/ç/g,'c').replace(/Ç/g,'C')
+    .replace(/ö/g,'o').replace(/Ö/g,'O')
+    .replace(/ü/g,'u').replace(/Ü/g,'U')
+    .replace(/ı/g,'i').replace(/İ/g,'I');
+}
+function fa_morseDecrypt(text) {
+  return text.trim().split(/\s*\/\s*/)
+    .map(w => w.trim().split(/\s+/)
+      .map(code => FA_MORSE_MAP[code] || '?').join('')
+    ).join(' ');
+}
+function fa_railFenceDecrypt(text, rails) {
+  const n = text.length;
+  if (rails < 2 || rails >= n) return text;
+  const pattern = [];
+  let rail = 0, dir = 1;
+  for (let i = 0; i < n; i++) {
+    pattern.push(rail);
+    if (rail === 0) dir = 1;
+    else if (rail === rails - 1) dir = -1;
+    rail += dir;
+  }
+  const counts = new Array(rails).fill(0);
+  for (const r of pattern) counts[r]++;
+  const railChars = [];
+  let pos = 0;
+  for (let r = 0; r < rails; r++) {
+    railChars.push(text.slice(pos, pos + counts[r]).split(''));
+    pos += counts[r];
+  }
+  const railIdx = new Array(rails).fill(0);
+  let result = '';
+  for (let i = 0; i < n; i++) {
+    const r = pattern[i];
+    result += railChars[r][railIdx[r]++];
+  }
+  return result;
+}
+
+const FA_TR_BIGRAMS = {
+  'ar':0.034,'er':0.031,'an':0.030,'en':0.028,'in':0.027,
+  'la':0.026,'al':0.025,'ir':0.024,'le':0.023,'de':0.022,
+  'el':0.021,'da':0.020,'ni':0.019,'il':0.019,'na':0.018,
+  'ra':0.017,'li':0.017,'ak':0.016,'at':0.016,'ın':0.015
+};
+
+function fa_bigramScore(text) {
+  const clean = fa_onlyLetters(text);
+  let score = 0;
+  for (let i = 0; i < clean.length - 1; i++) {
+    const bg = clean[i] + clean[i+1];
+    score += FA_TR_BIGRAMS[bg] || 0;
+  }
+  return score / Math.max(1, clean.length);
+}
+
+function fa_bestRailFence(text, lang) {
+  const results = [];
+  for (let rails = 2; rails <= 8; rails++) {
+    const dec = fa_railFenceDecrypt(text, rails);
+    results.push({ rails, decrypted: dec });
+  }
+  return results;
+}
+
+function detectAlgorithm(ciphertext) {
+
+  // 1. Morse
+  if (/^[\.\-\s\/]+$/.test(ciphertext.trim())) {
+    return {
+      algorithm: 'Morse Kodu',
+      confidence: 'Yüksek',
+      lang: '—',
+      note: 'Nokta ve çizgilerden oluşan kodlama.',
+      topLetters: '—',
+      decrypted: fa_morseDecrypt(ciphertext)
+    };
+  }
+
+  // 2. Yeterli veri
+  const { freq: rawFreq, total } = fa_getFreq(ciphertext);
+  if (total < 20) {
+    return {
+      algorithm: 'Yetersiz Veri',
+      confidence: 'Düşük',
+      lang: '—',
+      note: 'Güvenilir analiz için en az 20 harf gerekli.',
+      topLetters: '—',
+      decrypted: null
+    };
+  }
+
+  const topLetters = Object.entries(rawFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([ch, pct]) => `${ch.toUpperCase()}:%${pct.toFixed(1)}`)
+    .join('  ');
+
+  // 3. Türkçe karakter var mı? → Dil kesin Türkçe
+  const hasTurkish = /[ğşçöüıİĞŞÇÖÜ]/.test(ciphertext);
+
+  // 4. IC → Vigenere
+  const ic = fa_calcIC(ciphertext);
+  if (ic < 0.042) {
+    return {
+      algorithm: 'Vigenere Şifresi',
+      confidence: ic < 0.045 ? 'Yüksek' : 'Orta',
+      lang: hasTurkish ? 'Türkçe' : 'İngilizce',
+      note: `IC: ${ic.toFixed(4)} — Düşük IC çok alfabeli şifreye işaret eder. Çözüm için anahtar kelime gerekli.`,
+      topLetters,
+      decrypted: null
+    };
+  }
+
+  // 5. Her iki dilde Caesar hesapla
+  const caesarTR = fa_bestCaesar(ciphertext, 'tr');
+  const caesarEN = fa_bestCaesar(ciphertext, 'en');
+
+  // 6. Dil tespiti
+  // Türkçe karakter varsa kesin TR.
+  // Yoksa hangi dilde Caesar daha iyi sonuç veriyor?
+  const lang       = hasTurkish ? 'tr'
+    : (caesarTR.score < caesarEN.score ? 'tr' : 'en');
+  const langLabel  = lang === 'tr' ? 'Türkçe' : 'İngilizce';
+  const freqTable  = lang === 'tr' ? FA_TR_FREQ : FA_EN_FREQ;
+  const alpha      = lang === 'tr' ? FA_TR_ALPHA : FA_EN_ALPHA;
+  const bestCaesar = lang === 'tr' ? caesarTR : caesarEN;
+
+  // 7. Ham metin chi hesapla
+  const rawChi = fa_chiSq(rawFreq, freqTable);
+
+  // 8. Transposition tespiti
+  // MANTIK: Transposition harf frekanslarını korur.
+  // Kaydırma yapmak neredeyse hiç iyileştirme sağlamaz.
+  // improvement = rawChi / bestCaesar.score
+  // Transposition → improvement ≈ 1.0 (kaydırma işe yaramıyor)
+  // Substitution  → improvement >> 1.5 (doğru kaydırma çok iyileştiriyor)
+  const improvement = rawChi / bestCaesar.score;
+if (improvement < 1.35) {
+  const railResults = fa_bestRailFence(ciphertext, lang);
+const conf = rawChi < 30 ? 'Yüksek' : rawChi < 60 ? 'Orta' : 'Düşük';
+const railNote = railResults
+  .map(r => `Ray ${r.rails}: ${r.decrypted}`)
+  .join('\n');
+return {
+  algorithm: 'Rail Fence veya Sütunsal Transpozisyon',
+  confidence: conf,
+  lang: langLabel,
+  note: 'Harfler korunmuş, sıralama değişmiş.',
+  topLetters,
+  decrypted: 'Tüm Rail Fence denemeleri:\n' + railNote + '\n\nAnlamlı olan Rail Fence, değilse Sütunsal Transpozisyon (anahtar gerekli).'
+};
+}
+
+  // 9. Atbash tespiti
+  // MANTIK: Sadece oran kontrolü — mutlak eşik kullanmıyoruz
+  // çünkü chi değerleri metin uzunluğuna göre değişir.
+  const atbashDec = fa_atbashDecrypt(ciphertext, lang);
+  const { freq: atbashFreq } = fa_getFreq(atbashDec);
+  const atbashChi = fa_chiSq(atbashFreq, freqTable);
+
+  // Atbash Caesar'dan %30 daha iyiyse → Atbash
+  if (atbashChi < bestCaesar.score * 0.70) {
+    const conf = atbashChi < bestCaesar.score * 0.40 ? 'Yüksek' : 'Orta';
+    return {
+      algorithm: 'Atbash Şifresi',
+      confidence: conf,
+      lang: langLabel,
+      note: 'Ters alfabe haritalaması tespit edildi.',
+      topLetters,
+      decrypted: atbashDec
+    };
+  }
+
+  // 10. ROT13 — sadece İngilizce, Türkçe karakter yoksa
+  if (caesarEN.shift === 13) {
+    return {
+      algorithm: 'ROT13',
+      confidence: 'Yüksek',
+      lang: 'İngilizce',
+      note: 'Caesar shift=13 — ROT13 kendi kendinin tersidir.',
+      topLetters,
+      decrypted: caesarEN.decrypted
+    };
+  }
+
+// 11. Caesar veya ROT13
+// ROT13 sadece a-z harflerini değiştirir, shift=13 ise ROT13'tür
+const isROT13 = caesarEN.shift === 13 || (lang === 'tr' && bestCaesar.shift === 14);
+const finalAlgo = isROT13 ? 'ROT13' : 'Caesar Şifresi';
+const finalNote = isROT13
+  ? `Shift: 13 — ROT13 kendi kendinin tersidir.`
+  : `Shift: ${bestCaesar.shift} — "${alpha[bestCaesar.shift % alpha.length].toUpperCase()}" → "A"`;
+const conf = bestCaesar.score < 80 ? 'Yüksek'
+  : bestCaesar.score < 150 ? 'Orta' : 'Düşük';
+return {
+  algorithm: finalAlgo,
+  confidence: conf,
+  lang: langLabel,
+  note: finalNote,
+  topLetters,
+  decrypted: bestCaesar.decrypted
+};
+}
+
+function runFrequencyAnalysis() {
+  const input = document.getElementById('freqInput').value.trim();
+  if (!input) {
+    showToast(currentLang === 'tr'
+      ? 'Lütfen şifreli metin girin.'
+      : 'Please enter ciphertext.');
+    return;
+  }
+
+  const result = detectAlgorithm(input);
+  const outputEl = document.getElementById('freqOutput');
+
+  let text =
+    `📊 FREKANS ANALİZİ SONUCU\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `🔍 Tespit Edilen Algoritma : ${result.algorithm}\n` +
+    `📈 Güven Düzeyi            : ${result.confidence}\n` +
+    `🌐 Tespit Edilen Dil       : ${result.lang}\n` +
+    `ℹ️  Not                     : ${result.note}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `📝 En Sık 6 Harf           : ${result.topLetters}\n`;
+
+  if (result.decrypted) {
+    text +=
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `✅ ÇÖZÜMLENMIŞ METİN\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      result.decrypted;
+  } else if (result.decrypted === null) {
+    text +=
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `🔑 Otomatik çözüm için anahtar gerekli.\n` +
+      `   Şifre Laboratuvarı bölümünü kullanın.`;
+  }
+
+  outputEl.textContent = text;
+}
 window.addEventListener('hashchange', loadFromHash);
 </script>
 </body>
